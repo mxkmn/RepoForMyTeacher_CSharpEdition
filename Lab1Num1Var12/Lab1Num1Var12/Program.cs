@@ -75,7 +75,7 @@ namespace Lab1Num1Var12 {
 
     public static void Exit() { // ожидание закрытия консоли пользователем
       Console.Write("\nДля выхода из программы нажмите любую клавишу...");
-      Console.ReadKey();
+      Console.ReadKey(true);
     }
   }
 }
