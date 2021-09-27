@@ -69,6 +69,7 @@ namespace Lab2Num1Var12 {
             0,
             0});
       this.numData.ValueChanged += new System.EventHandler(this.numData_Changed);
+      this.numData.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numData_KeyUp);
       // 
       // outLabel
       // 
