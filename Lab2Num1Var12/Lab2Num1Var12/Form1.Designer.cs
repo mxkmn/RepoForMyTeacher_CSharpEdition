@@ -80,7 +80,7 @@ namespace Lab2Num1Var12 {
       this.outLabel.Name = "outLabel";
       this.outLabel.Size = new System.Drawing.Size(287, 30);
       this.outLabel.TabIndex = 3;
-      this.outLabel.Text = "1 копейка";
+      this.outLabel.Text = "тут будут копейки";
       this.outLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // Form1

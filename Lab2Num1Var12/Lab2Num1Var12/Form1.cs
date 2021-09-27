@@ -12,6 +12,8 @@ namespace Lab2Num1Var12 {
   public partial class Form1 : Form {
     public Form1() {
       InitializeComponent();
+      numData.Value = Properties.Settings.Default.savedNumData;
+      ChangeText();
     }
     public static string GetMoney(int n) { // отдаёт строку с количеством денег
       string output = "";
@@ -42,13 +44,17 @@ namespace Lab2Num1Var12 {
       }
       return output;
     }
-
-    private void numData_Changed(object sender, EventArgs e) {
+    private void ChangeText() {
       outLabel.Text = GetMoney(Decimal.ToInt32(this.numData.Value));
+      Properties.Settings.Default.savedNumData = this.numData.Value;
+      Properties.Settings.Default.Save();
+    }
+    private void numData_Changed(object sender, EventArgs e) {
+      ChangeText();
     }
 
     private void numData_KeyUp(object sender, KeyEventArgs e) {
-      outLabel.Text = GetMoney(Decimal.ToInt32(this.numData.Value));
+      ChangeText();
     }
   }
 }
