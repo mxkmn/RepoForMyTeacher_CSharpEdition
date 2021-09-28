@@ -34,7 +34,7 @@ namespace Lab2Num2Var14 {
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(14, 15);
+      this.label1.Location = new System.Drawing.Point(52, 16);
       this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(367, 25);
@@ -43,7 +43,7 @@ namespace Lab2Num2Var14 {
       // 
       // equalNums
       // 
-      this.equalNums.Location = new System.Drawing.Point(379, 13);
+      this.equalNums.Location = new System.Drawing.Point(417, 14);
       this.equalNums.Minimum = new decimal(new int[] {
             1,
             0,
@@ -65,19 +65,20 @@ namespace Lab2Num2Var14 {
       this.numsRow.Location = new System.Drawing.Point(0, 60);
       this.numsRow.Multiline = true;
       this.numsRow.Name = "numsRow";
-      this.numsRow.PlaceholderText = "Здесь вводится числовая последовательность";
+      this.numsRow.PlaceholderText = "Введите последовательность (без лишних пробелов)";
       this.numsRow.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.numsRow.Size = new System.Drawing.Size(514, 105);
+      this.numsRow.Size = new System.Drawing.Size(598, 105);
       this.numsRow.TabIndex = 2;
       this.numsRow.TextChanged += new System.EventHandler(this.OnChange);
       this.numsRow.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnPress);
       // 
       // outText
       // 
+      this.outText.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
       this.outText.Location = new System.Drawing.Point(0, 168);
       this.outText.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
       this.outText.Name = "outText";
-      this.outText.Size = new System.Drawing.Size(514, 43);
+      this.outText.Size = new System.Drawing.Size(598, 43);
       this.outText.TabIndex = 3;
       this.outText.Text = "Тут что-то будет выведено";
       this.outText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -86,14 +87,14 @@ namespace Lab2Num2Var14 {
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(514, 211);
+      this.ClientSize = new System.Drawing.Size(598, 211);
       this.Controls.Add(this.outText);
       this.Controls.Add(this.numsRow);
       this.Controls.Add(this.equalNums);
       this.Controls.Add(this.label1);
       this.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-      this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+      this.Margin = new System.Windows.Forms.Padding(5);
       this.Name = "Form1";
       this.Text = "Нахождение n чисел подряд в последовательности";
       ((System.ComponentModel.ISupportInitialize)(this.equalNums)).EndInit();
