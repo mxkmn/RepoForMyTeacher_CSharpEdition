@@ -52,9 +52,11 @@ namespace Lab2Num1Var12 {
     private void numData_Changed(object sender, EventArgs e) {
       ChangeText();
     }
-
     private void numData_KeyUp(object sender, KeyEventArgs e) {
       ChangeText();
+    }
+    private void PrintInfo(object sender, EventArgs e) {
+      MessageBox.Show("Задача на If – вариант 12. Дано натуральное число 1 ≤ n ≤ 9999, определяющее стоимость товара в копейках. Выразить стоимость в рублях и копейках, например, 3 рубля 21 копейка, 15 рублей 5 копеек, 1 рубль ровно и т. п.");
     }
   }
 }

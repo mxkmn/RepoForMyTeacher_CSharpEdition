@@ -49,8 +49,12 @@ namespace Lab2Num2Var14 {
         return (equals + "-ка чисел не найдена."); // исключение при ненахождении
     }
     private void DataProcessing() {
-      outText.Text = GetN(numsRow.Text, decimal.ToInt32(equalNums.Value));
-      Properties.Settings.Default.numsRowSaved = numsRow.Text;
+      if (numsRow.Text == "")
+        outText.Text = "Ничего не введено";
+      else {
+        outText.Text = GetN(numsRow.Text, decimal.ToInt32(equalNums.Value));
+        Properties.Settings.Default.numsRowSaved = numsRow.Text;
+      }  
       Properties.Settings.Default.equalNumsSaved = equalNums.Value;
       Properties.Settings.Default.Save();
     }
@@ -59,6 +63,13 @@ namespace Lab2Num2Var14 {
     }
     private void OnPress(object sender, KeyEventArgs e) {
       DataProcessing();
+    }
+    private void ClearData(object sender, EventArgs e) {
+      numsRow.Text = "";
+      DataProcessing();
+    }
+    private void PrintInfo(object sender, EventArgs e) {
+      MessageBox.Show("Задача на For – вариант 14. Дана последовательность натуральных чисел. Определить, есть ли в последовательности хотя бы одна n-ка одинаковых “соседних” чисел (n и элементы последовательности вводятся с клавиатуры). В случае положительного ответа определить порядковые номера чисел первой из таких пар.");
     }
   }
 }
