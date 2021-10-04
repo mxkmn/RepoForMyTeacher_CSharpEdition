@@ -10,8 +10,8 @@ namespace Lab3Var12 {
     private int _h, _s, _v, _r, _g, _b;
     public Color(ColorModels model = ColorModels.HSV, int var1 = 180, int var2 = 50, int var3 = 50) {
       if (model == ColorModels.HSV) {
-        S = var1;
-        H = var2;
+        H = var1;
+        S = var2;
         V = var3;
         _UpdateRgb();
       }
@@ -96,55 +96,55 @@ namespace Lab3Var12 {
 
       switch ((H / 60) % 6) {
         case 0:
-          R = V;
-          G = vInc;
-          B = vMin;
+          _r = V;
+          _g = vInc;
+          _b = vMin;
           break;
         case 1:
-          R = vDec;
-          G = V;
-          B = vMin;
+          _r = vDec;
+          _g = V;
+          _b = vMin;
           break;
         case 2:
-          R = vMin;
-          G = V;
-          B = vInc;
+          _r = vMin;
+          _g = V;
+          _b = vInc;
           break;
         case 3:
-          R = vMin;
-          G = vDec;
-          B = V;
+          _r = vMin;
+          _g = vDec;
+          _b = V;
           break;
         case 4:
-          R = vInc;
-          G = vMin;
-          B = V;
+          _r = vInc;
+          _g = vMin;
+          _b = V;
           break;
         case 5:
-          R = V;
-          G = vMin;
-          B = vDec;
+          _r = V;
+          _g = vMin;
+          _b = vDec;
           break;
       }
-      R = R * 255 / 100;
-      G = G * 255 / 100;
-      B = B * 255 / 100;
+      _r = R * 255 / 100;
+      _g = G * 255 / 100;
+      _b = B * 255 / 100;
     }
     private void _UpdateHsv() {
       int min = Math.Min(R, Math.Min(G, B));
       int max = Math.Max(R, Math.Max(G, B));
 
-      V = max;
-      S = max == 0 ? 0 : 1 - (min / max);
+      _v = max;
+      _s = max == 0 ? 0 : 1 - (min / max);
 
       if (max == 0)
         return;
       else if (max == R)
-        H = ((G - B) / (max - min)) % 360;
+        _h = ((G - B) / (max - min)) % 360;
       else if (max == G)
-        H = (G - B) / (max - min) + 120;
+        _h = (G - B) / (max - min) + 120;
       else if (max == B)
-        H = (G - B) / (max - min) + 240;
+        _h = (G - B) / (max - min) + 240;
     }
   }
 }
