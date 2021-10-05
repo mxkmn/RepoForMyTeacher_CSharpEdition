@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab3Var12 {
   public enum ColorModels { HSV, RGB };
@@ -89,8 +85,8 @@ namespace Lab3Var12 {
       }
     }
     private void _UpdateRgb() {
-      int vMin = ((100 - S) * V / 100);
-      int a = (V - vMin) * (H % 60) / 60;
+      int vMin = Convert.ToInt32(1.0 * (100 - S) * V / 100);
+      int a = Convert.ToInt32(1.0 * (V - vMin) * (H % 60) / 60);
       int vInc = vMin + a;
       int vDec = V - a;
 
@@ -131,20 +127,21 @@ namespace Lab3Var12 {
       _b = B * 255 / 100;
     }
     private void _UpdateHsv() {
-      int min = Math.Min(R, Math.Min(G, B));
-      int max = Math.Max(R, Math.Max(G, B));
+      double r = 1.0 * R / 255, g = 1.0 * G / 255, b = 1.0 * B / 255;
+      double min = Math.Min(r, Math.Min(g, b));
+      double max = Math.Max(r, Math.Max(g, b));
 
-      _v = max;
-      _s = max == 0 ? 0 : 1 - (min / max);
+      _v = Convert.ToInt32(max * 100);
+      _s = max == 0 ? 0 : Convert.ToInt32((1 - (min / max))*100);
 
-      if (max == 0)
+      if (max == 0 || max == min)
         return;
-      else if (max == R)
-        _h = ((G - B) / (max - min)) % 360;
-      else if (max == G)
-        _h = (G - B) / (max - min) + 120;
+      else if (max == r)
+        _h = Convert.ToInt32(((g - b) / (max - min)) % 360);
+      else if (max == g)
+        _h = Convert.ToInt32((g - b) / (max - min) + 120);
       else if (max == B)
-        _h = (G - B) / (max - min) + 240;
+        _h = Convert.ToInt32((g - b) / (max - min) + 240);
     }
   }
 }
