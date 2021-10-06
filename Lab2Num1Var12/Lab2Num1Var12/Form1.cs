@@ -44,15 +44,17 @@ namespace Lab2Num1Var12 {
       }
       return output;
     }
-    private void ChangeText() {
-      outLabel.Text = GetMoney(Decimal.ToInt32(this.numData.Value));
+    private void ChangeText() { // логика
+      outLabel.Text = GetMoney(Decimal.ToInt32(this.numData.Value)); // вывод на лейбл
+
+      // сохранение данных
       Properties.Settings.Default.savedNumData = this.numData.Value;
       Properties.Settings.Default.Save();
     }
-    private void numData_Changed(object sender, EventArgs e) {
+    private void numData_Changed(object sender, EventArgs e) { // при изменении поля
       ChangeText();
     }
-    private void numData_KeyUp(object sender, KeyEventArgs e) {
+    private void numData_KeyUp(object sender, KeyEventArgs e) { // при нажатии кнопки (ввода данных)
       ChangeText();
     }
     private void PrintInfo(object sender, EventArgs e) {

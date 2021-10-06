@@ -134,31 +134,33 @@ namespace Lab3Var12 {
       this.rBetween.Name = "rBetween";
       this.rBetween.Size = new System.Drawing.Size(208, 25);
       this.rBetween.TabIndex = 14;
-      this.rBetween.Text = "промежуток";
+      this.rBetween.Text = "в промежутке от 0 до 255";
       // 
       // rChanger
       // 
       this.rChanger.Location = new System.Drawing.Point(224, 120);
       this.rChanger.Maximum = new decimal(new int[] {
-            0,
+            255,
             0,
             0,
             0});
       this.rChanger.Name = "rChanger";
       this.rChanger.Size = new System.Drawing.Size(101, 29);
       this.rChanger.TabIndex = 15;
+      this.rChanger.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyPressedRgb);
       // 
       // gChanger
       // 
       this.gChanger.Location = new System.Drawing.Point(223, 170);
       this.gChanger.Maximum = new decimal(new int[] {
-            0,
+            255,
             0,
             0,
             0});
       this.gChanger.Name = "gChanger";
       this.gChanger.Size = new System.Drawing.Size(101, 29);
       this.gChanger.TabIndex = 18;
+      this.gChanger.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyPressedRgb);
       // 
       // gBetween
       // 
@@ -167,7 +169,7 @@ namespace Lab3Var12 {
       this.gBetween.Name = "gBetween";
       this.gBetween.Size = new System.Drawing.Size(208, 25);
       this.gBetween.TabIndex = 17;
-      this.gBetween.Text = "промежуток";
+      this.gBetween.Text = "в промежутке от 0 до 255";
       // 
       // label3
       // 
@@ -181,13 +183,14 @@ namespace Lab3Var12 {
       // 
       this.bChanger.Location = new System.Drawing.Point(222, 220);
       this.bChanger.Maximum = new decimal(new int[] {
-            0,
+            255,
             0,
             0,
             0});
       this.bChanger.Name = "bChanger";
       this.bChanger.Size = new System.Drawing.Size(101, 29);
       this.bChanger.TabIndex = 21;
+      this.bChanger.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyPressedRgb);
       // 
       // bBetween
       // 
@@ -196,7 +199,7 @@ namespace Lab3Var12 {
       this.bBetween.Name = "bBetween";
       this.bBetween.Size = new System.Drawing.Size(208, 25);
       this.bBetween.TabIndex = 20;
-      this.bBetween.Text = "промежуток";
+      this.bBetween.Text = "в промежутке от 0 до 255";
       // 
       // label5
       // 
@@ -229,14 +232,10 @@ namespace Lab3Var12 {
       // vChanger
       // 
       this.vChanger.Location = new System.Drawing.Point(222, 396);
-      this.vChanger.Maximum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
       this.vChanger.Name = "vChanger";
       this.vChanger.Size = new System.Drawing.Size(101, 29);
       this.vChanger.TabIndex = 28;
+      this.vChanger.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyPressedHsv);
       // 
       // vBetween
       // 
@@ -245,7 +244,7 @@ namespace Lab3Var12 {
       this.vBetween.Name = "vBetween";
       this.vBetween.Size = new System.Drawing.Size(208, 25);
       this.vBetween.TabIndex = 27;
-      this.vBetween.Text = "промежуток";
+      this.vBetween.Text = "в промежутке от 0 до 100";
       // 
       // label4
       // 
@@ -258,14 +257,10 @@ namespace Lab3Var12 {
       // sChanger
       // 
       this.sChanger.Location = new System.Drawing.Point(223, 346);
-      this.sChanger.Maximum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
       this.sChanger.Name = "sChanger";
       this.sChanger.Size = new System.Drawing.Size(101, 29);
       this.sChanger.TabIndex = 25;
+      this.sChanger.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyPressedHsv);
       // 
       // sBetween
       // 
@@ -274,7 +269,7 @@ namespace Lab3Var12 {
       this.sBetween.Name = "sBetween";
       this.sBetween.Size = new System.Drawing.Size(208, 25);
       this.sBetween.TabIndex = 24;
-      this.sBetween.Text = "промежуток";
+      this.sBetween.Text = "в промежутке от 0 до 100";
       // 
       // label7
       // 
@@ -317,7 +312,7 @@ namespace Lab3Var12 {
       this.Controls.Add(this.hLabel);
       this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-      this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+      this.Margin = new System.Windows.Forms.Padding(6);
       this.Name = "Form1";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Работа с цветом";

@@ -10,20 +10,20 @@ using System.Windows.Forms;
 
 namespace Lab2Num2Var14 {
   public partial class Form1 : Form {
-    public Form1() {
+    public Form1() { // при открытии программы - вывод старых данных на форму
       int csharpIsShit = decimal.ToInt32(Properties.Settings.Default.equalNumsSaved);
       InitializeComponent();
       numsRow.Text = Properties.Settings.Default.numsRowSaved;
       equalNums.Value = csharpIsShit;
       DataProcessing();
     }
-    public static string GetN(string numsStr, int equals) {
-      int lastNum = Int32.MinValue;
-      int sameNums = Int32.MinValue;
-      bool isFound = false;
-      string outStr = "";
+    public static string GetN(string numsStr, int equals) { // обработка введённой строки
+      int lastNum = Int32.MinValue; // последнее число
+      int sameNums = Int32.MinValue; // количество последних чисел подряд
+      bool isFound = false; // найдена ли нужная последовательность
+      string outStr = ""; // выводимая строка
 
-      string[] nums = numsStr.Split();
+      string[] nums = numsStr.Split(); // все числа
       for (int i = 0; i < nums.Length; i++) {
         if (!int.TryParse(nums[i], out int newNum))
           return "Ошибка ввода!";
@@ -48,7 +48,7 @@ namespace Lab2Num2Var14 {
       else
         return (equals + "-ка чисел не найдена."); // исключение при ненахождении
     }
-    private void DataProcessing() {
+    private void DataProcessing() { // логика
       if (numsRow.Text == "")
         outText.Text = "Ничего не введено";
       else {
@@ -58,17 +58,17 @@ namespace Lab2Num2Var14 {
       Properties.Settings.Default.equalNumsSaved = equalNums.Value;
       Properties.Settings.Default.Save();
     }
-    private void OnChange(object sender, EventArgs e) {
+    private void OnChange(object sender, EventArgs e) { // при изменении данных
       DataProcessing();
     }
-    private void OnPress(object sender, KeyEventArgs e) {
+    private void OnPress(object sender, KeyEventArgs e) { // при вводе данных
       DataProcessing();
     }
-    private void ClearData(object sender, EventArgs e) {
+    private void ClearData(object sender, EventArgs e) { // очистка полей при нажатии кнопки
       numsRow.Text = "";
       DataProcessing();
     }
-    private void PrintInfo(object sender, EventArgs e) {
+    private void PrintInfo(object sender, EventArgs e) { // вывод задания при нажатии кнопки
       MessageBox.Show("Задача на For – вариант 14. Дана последовательность натуральных чисел. Определить, есть ли в последовательности хотя бы одна n-ка одинаковых “соседних” чисел (n и элементы последовательности вводятся с клавиатуры). В случае положительного ответа определить порядковые номера чисел первой из таких пар.");
     }
   }

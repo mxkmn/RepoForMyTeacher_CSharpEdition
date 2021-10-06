@@ -10,47 +10,41 @@ using System.Windows.Forms;
 
 namespace Lab3Var12 {
   public partial class Form1 : Form {
-    Color color = new Color();
-    public Form1() {
-      InitializeComponent();
-      UpdateLabels();
+    Color color = new Color(); // создаём объект
+    public Form1() { // при запуске программы
+      InitializeComponent(); // инициализируем интерфейс
+      UpdateLabels(); // модифицируем поля в соответствии с введёнными данными
     }
-    private void UpdateLabels() {
+    private void UpdateLabels() { // вывод данных
+      // отображаем текущий цвет в квадрате сверху
       colorSquare.BackColor = System.Drawing.Color.FromArgb(255, color.R, color.G, color.B);
 
+      // изменение значений лейблов и изменяльщиков
       hLabel.Text = "H: " + color.H;
-      sLabel.Text = "S: " + color.S;
-      vLabel.Text = "V: " + color.V;
-      rLabel.Text = "R: " + color.R;
-      gLabel.Text = "G: " + color.G;
-      bLabel.Text = "B: " + color.B;
-
-      ChangeNumericLabels(0, 255, color.R, rBetween, rChanger);
-      ChangeNumericLabels(0, 255, color.G, gBetween, gChanger);
-      ChangeNumericLabels(0, 255, color.B, bBetween, bChanger);
-
-      ChangeNumericLabels(0, 100, color.S, sBetween, sChanger);
-      ChangeNumericLabels(0, 100, color.V, vBetween, vChanger);
+      sLabel.Text = "S: " + color.S; sChanger.Value = color.S;
+      vLabel.Text = "V: " + color.V; vChanger.Value = color.V;
+      rLabel.Text = "R: " + color.R; rChanger.Value = color.R;
+      gLabel.Text = "G: " + color.G; gChanger.Value = color.G;
+      bLabel.Text = "B: " + color.B; bChanger.Value = color.B;
     }
-    private void ChangeNumericLabels(int min, int max, int current, System.Windows.Forms.Label label, System.Windows.Forms.NumericUpDown box) {
-      int from = min - current;
-      int to = max - current;
-
-      box.Minimum = from;
-      box.Maximum = to;
-      box.Value = 0;
-      label.Text = "от " + from + " до " + to;
-    }
-    private void ChangeRgb(object sender, EventArgs e) {
-      color.R = (int)rChanger.Value + color.R;
-      color.G = (int)gChanger.Value + color.G;
-      color.B = (int)bChanger.Value + color.B;
+    private void ChangeRgb(object sender, EventArgs e) { // меняем RGB значения в зависимости от ввода
+      color.R = decimal.ToInt32(rChanger.Value);
+      color.G = decimal.ToInt32(gChanger.Value);
+      color.B = decimal.ToInt32(bChanger.Value);
       UpdateLabels();
     }
-    private void ChangeHsv(object sender, EventArgs e) {
-      color.S = (int)sChanger.Value + color.S;
-      color.V = (int)vChanger.Value + color.V;
+    private void KeyPressedRgb(object sender, KeyEventArgs e) { // кнопка нажата в полях R/G/B
+      if (e.KeyCode == Keys.Enter) // при нажатии Enter
+        ChangeRgb(null, null); // устанавливаем введённые значения
+    }
+    private void ChangeHsv(object sender, EventArgs e) { // меняем SV значения в зависимости от ввода
+      color.S = decimal.ToInt32(sChanger.Value);
+      color.V = decimal.ToInt32(vChanger.Value);
       UpdateLabels();
+    }
+    private void KeyPressedHsv(object sender, KeyEventArgs e) { // кнопка нажата в полях S/V
+      if (e.KeyCode == Keys.Enter) // при нажатии Enter
+        ChangeHsv(null, null); // устанавливаем введённые значения
     }
   }
 }
