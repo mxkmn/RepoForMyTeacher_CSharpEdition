@@ -127,21 +127,20 @@ namespace Lab3Var12 {
       _b = B * 255 / 100;
     }
     private void _UpdateHsv() {
-      double r = 1.0 * R / 255, g = 1.0 * G / 255, b = 1.0 * B / 255;
-      double min = Math.Min(r, Math.Min(g, b));
-      double max = Math.Max(r, Math.Max(g, b));
+      double r = _r / 255.0, g = _g / 255.0, b = _b / 255.0;
+      double min = Math.Min(r, Math.Min(g, b)), max = Math.Max(r, Math.Max(g, b));
 
-      _v = Convert.ToInt32(max * 100);
-      _s = max == 0 ? 0 : Convert.ToInt32((1 - (min / max))*100);
-
-      if (max == 0 || max == min)
-        return;
+      if (max == min)
+        _h = 0;
       else if (max == r)
-        _h = Convert.ToInt32(((g - b) / (max - min)) % 360);
+        _h = Convert.ToInt32(Math.Round(60.0 * (1.0 * (g - b) / (max - min) % 6)));
       else if (max == g)
-        _h = Convert.ToInt32((g - b) / (max - min) + 120);
-      else if (max == B)
-        _h = Convert.ToInt32((g - b) / (max - min) + 240);
+        _h = Convert.ToInt32(Math.Round(60.0 * (b - r) / (max - min)) + 120);
+      else if (max == b)
+        _h = Convert.ToInt32(Math.Round(60.0 * (r - g) / (max - min)) + 240);
+
+      _v = Convert.ToInt32(Math.Round(max * 100));
+      _s = max == 0 ? 0 : Convert.ToInt32(Math.Round((1 - (min / max)) * 100));
     }
   }
 }
