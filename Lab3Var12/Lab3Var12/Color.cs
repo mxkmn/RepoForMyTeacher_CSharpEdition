@@ -9,13 +9,11 @@ namespace Lab3Var12 {
         H = var1;
         S = var2;
         V = var3;
-        _UpdateRgb();
       }
       else {
         R = var1;
         G = var2;
         B = var3;
-        _UpdateHsv();
       }
     }
     public int H {
