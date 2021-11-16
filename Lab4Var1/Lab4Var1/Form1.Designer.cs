@@ -65,7 +65,7 @@ namespace Lab4Var1 {
       this.buyDrink.TabIndex = 10;
       this.buyDrink.Text = "Купить напиток";
       this.buyDrink.UseVisualStyleBackColor = true;
-      this.buyDrink.Click += new System.EventHandler(this.buyDrink_Click);
+      this.buyDrink.Click += new System.EventHandler(this.BuyDrink_Click);
       // 
       // getDrink
       // 
@@ -76,7 +76,7 @@ namespace Lab4Var1 {
       this.getDrink.TabIndex = 11;
       this.getDrink.Text = "Забрать напиток";
       this.getDrink.UseVisualStyleBackColor = true;
-      this.getDrink.Click += new System.EventHandler(this.getDrink_Click);
+      this.getDrink.Click += new System.EventHandler(this.GetDrink_Click);
       // 
       // label2
       // 

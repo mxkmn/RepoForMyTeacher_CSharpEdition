@@ -1,13 +1,10 @@
 ﻿using Lab4Var1.Properties;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab4Var1 {
   public class Drink {
+    protected static Random rnd = new Random();
     public int volumeInMl;
     public virtual String GetInfo() {
       return ("Напиток (объём " + volumeInMl + " мл)");
@@ -15,7 +12,6 @@ namespace Lab4Var1 {
     public virtual Image GetPicture() {
       return null;
     }
-    protected static Random rnd = new Random();
   }
   public enum JuiceType { apple, orange, grape };
   public class Juice : Drink {
@@ -97,8 +93,8 @@ namespace Lab4Var1 {
   }
   public enum AlcoholType { whiskey, jaguar, beer };
   public class Alcohol : Drink {
-    public AlcoholType? type;
-    public int? degree;
+    public AlcoholType type;
+    public int degree;
     public static Alcohol GenerateRandomly() {
       return new Alcohol {
         volumeInMl = rnd.Next(5, 16) * 100, // от 500 до 1500 мл

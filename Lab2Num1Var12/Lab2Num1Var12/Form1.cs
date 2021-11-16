@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Lab2Num1Var12 {
@@ -15,6 +8,24 @@ namespace Lab2Num1Var12 {
       numData.Value = Properties.Settings.Default.savedNumData;
       ChangeText();
     }
+    private void ChangeText() { // логика
+      outLabel.Text = Logic.GetMoney(Decimal.ToInt32(this.numData.Value)); // вывод на лейбл
+
+      // сохранение данных
+      Properties.Settings.Default.savedNumData = this.numData.Value;
+      Properties.Settings.Default.Save();
+    }
+    private void numData_Changed(object sender, EventArgs e) { // при изменении поля
+      ChangeText();
+    }
+    private void numData_KeyUp(object sender, KeyEventArgs e) { // при нажатии кнопки (ввода данных)
+      ChangeText();
+    }
+    private void PrintInfo(object sender, EventArgs e) {
+      MessageBox.Show("Задача на If – вариант 12. Дано натуральное число 1 ≤ n ≤ 9999, определяющее стоимость товара в копейках. Выразить стоимость в рублях и копейках, например, 3 рубля 21 копейка, 15 рублей 5 копеек, 1 рубль ровно и т. п.");
+    }
+  }
+  public class Logic {
     public static string GetMoney(int n) { // отдаёт строку с количеством денег
       string output = "";
       int rubs = n / 100, kops = n % 100;
@@ -43,22 +54,6 @@ namespace Lab2Num1Var12 {
           output += " копеек";
       }
       return output;
-    }
-    private void ChangeText() { // логика
-      outLabel.Text = GetMoney(Decimal.ToInt32(this.numData.Value)); // вывод на лейбл
-
-      // сохранение данных
-      Properties.Settings.Default.savedNumData = this.numData.Value;
-      Properties.Settings.Default.Save();
-    }
-    private void numData_Changed(object sender, EventArgs e) { // при изменении поля
-      ChangeText();
-    }
-    private void numData_KeyUp(object sender, KeyEventArgs e) { // при нажатии кнопки (ввода данных)
-      ChangeText();
-    }
-    private void PrintInfo(object sender, EventArgs e) {
-      MessageBox.Show("Задача на If – вариант 12. Дано натуральное число 1 ≤ n ≤ 9999, определяющее стоимость товара в копейках. Выразить стоимость в рублях и копейках, например, 3 рубля 21 копейка, 15 рублей 5 копеек, 1 рубль ровно и т. п.");
     }
   }
 }
