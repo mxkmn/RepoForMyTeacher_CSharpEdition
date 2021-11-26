@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 
 namespace Lab5 {
   class Player : BaseObject {
-    public float vX, vY;
+    public float XModifier, YModifier;
     public Player(float x, float y, float angle) : base(x, y, angle) { }
     public override void Draw(Graphics g) {
       if (isColorReversed) {

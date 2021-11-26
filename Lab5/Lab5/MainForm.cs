@@ -53,19 +53,19 @@ namespace Lab5 {
         dx /= lenght;
         dy /= lenght;
 
-        player.vX += dx * 0.45f;
-        player.vY += dy * 0.45f;
+        player.XModifier += dx * 0.45f;
+        player.YModifier += dy * 0.45f;
 
-        player.Angle = 90 - MathF.Atan2(player.vX, player.vY) * 180 / MathF.PI;
+        player.Angle = 90 - MathF.Atan2(player.XModifier, player.YModifier) * 180 / MathF.PI;
       }
 
       // уменьшаем скорость
-      player.vX *= 0.9f;
-      player.vY *= 0.9f;
+      player.XModifier *= 0.9f;
+      player.YModifier *= 0.9f;
 
       // сдвигаем игрока
-      player.X += player.vX;
-      player.Y += player.vY;
+      player.X += player.XModifier;
+      player.Y += player.YModifier;
     }
 
 
