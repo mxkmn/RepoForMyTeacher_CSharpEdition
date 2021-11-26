@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 namespace Lab5 {
   class BaseObject {
     public float X, Y, Angle;
+    public bool isColorReversed;
     public BaseObject(float x, float y, float angle) { // установка стартовых значений
       X = x;
       Y = y;
@@ -16,6 +17,9 @@ namespace Lab5 {
       Y = random.Next(10, maxY-10);
     }
     public virtual void Draw(Graphics g) { } // этой штукой объект рисуется в начале координат
+    public void SetReverseColor(bool isReversed) { // этой штукой изменяется цвет
+      isColorReversed = isReversed;
+    }
     public Matrix GetPosition() {
       var matrix = new Matrix();
       matrix.Translate(X, Y);
@@ -42,7 +46,8 @@ namespace Lab5 {
     }
     public Action<BaseObject, BaseObject> OnOverlap; // делегат, который отрабатывается при пересечении 
     public virtual void Overlap(BaseObject obj) { // при любом пересечении
-      OnOverlap?.Invoke(this, obj); // срабатывание делегата, если он не null
+      if (!(obj is BlackLabel))
+        OnOverlap?.Invoke(this, obj); // срабатывание делегата, если он не null
     }
   }
 }

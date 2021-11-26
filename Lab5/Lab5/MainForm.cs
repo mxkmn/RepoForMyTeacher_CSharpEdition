@@ -12,6 +12,7 @@ namespace Lab5 {
     Marker marker;
     Target target1 = new Target(0, 0, 0);
     Target target2 = new Target(0, 0, 0);
+    BlackLabel blackLabel;
     public MainForm() {
       InitializeComponent();
       
@@ -20,6 +21,7 @@ namespace Lab5 {
       marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2, 0);
       target1.GenerateRandomly(pbMain.Width, pbMain.Height);
       target2.GenerateRandomly(pbMain.Width, pbMain.Height);
+      blackLabel = new BlackLabel(pbMain.Width / 2, pbMain.Height);
 
       // инициализируем делегаты игрока
       player.OnOverlap = (p, obj) => {
@@ -34,11 +36,12 @@ namespace Lab5 {
         t.GenerateRandomly(pbMain.Width, pbMain.Height);
       };
 
-      // добавляем объекты, которые нужно отрисовывать, в массив 
-      drawingObjects.Add(marker);
-      drawingObjects.Add(player);
+      // добавляем объекты, которые нужно отрисовывать, в массив
+      drawingObjects.Add(blackLabel);
       drawingObjects.Add(target1);
       drawingObjects.Add(target2);
+      drawingObjects.Add(marker);
+      drawingObjects.Add(player);
     }
     
     private void MovePlayer(object sender = null, EventArgs e = null) { // Движение игрока
@@ -79,6 +82,9 @@ namespace Lab5 {
           player.Overlap(obj);
           obj.Overlap(player);
         }
+        if (!(obj is BlackLabel)) {
+          obj.SetReverseColor(blackLabel.Overlaps(obj, g));
+        }
       }
 
       // перемещение 
@@ -89,6 +95,7 @@ namespace Lab5 {
       lblScore.Text = $"Счёт: {score}";
     }
     private void UpdatePicture(object sender, EventArgs e) { // при тике таймера
+      blackLabel.X = (float)((blackLabel.X + 2) % (pbMain.Width * 1.5));
       pbMain.Invalidate(); // вызов DrawPicture
     }
     private void PictureClicked(object sender, MouseEventArgs e) { // при нажатии мышкой
