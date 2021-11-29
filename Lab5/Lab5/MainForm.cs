@@ -6,8 +6,8 @@ using System.Windows.Forms;
 
 namespace Lab5 {
   public partial class MainForm : Form {
-    List<BaseObject> drawingObjects = new List<BaseObject>();
     int score = 0;
+    List<BaseObject> drawingObjects = new List<BaseObject>();
     Player player;
     Marker marker;
     Target target1 = new Target(0, 0, 0);
@@ -17,30 +17,36 @@ namespace Lab5 {
       InitializeComponent();
       
       // инициализируем объекты
-      player = new Player(pbMain.Width / 2 - 50, pbMain.Height / 2, 0);
-      marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2, 0);
+      player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
       target1.GenerateRandomly(pbMain.Width, pbMain.Height);
       target2.GenerateRandomly(pbMain.Width, pbMain.Height);
       blackLabel = new BlackLabel(pbMain.Width / 2, pbMain.Height);
 
       // инициализируем делегаты игрока
-      player.OnOverlap = (p, obj) => {
-        txtLog.Text = $"[{DateTime.Now:mm:ss:ff}] Игрок пересёкся с {obj}\n" + txtLog.Text;
+      player.OnOverlap = (obj) => {
+        if (!(obj is BlackLabel))
+          txtLog.Text = $"[{DateTime.Now:mm:ss:ff}] Игрок пересёкся с {obj}\n" + txtLog.Text;
       };
-      player.OnMarkerOverlap += (m) => {
+      player.OnMarkerOverlap = (m) => {
         drawingObjects.Remove(m);
         marker = null;
       };
-      player.OnTargetOverlap += (t) => {
+      player.OnTargetOverlap = (t) => {
         score++;
         t.GenerateRandomly(pbMain.Width, pbMain.Height);
+      };
+      // инициализируем делегаты чёрной метки
+      blackLabel.OnOverlap = (obj) => {
+        obj.SetReverseColor(true);
+      };
+      blackLabel.OnNonOverlap = (obj) => {
+        obj.SetReverseColor(false);
       };
 
       // добавляем объекты, которые нужно отрисовывать, в массив
       drawingObjects.Add(blackLabel);
       drawingObjects.Add(target1);
       drawingObjects.Add(target2);
-      drawingObjects.Add(marker);
       drawingObjects.Add(player);
     }
     
@@ -72,26 +78,31 @@ namespace Lab5 {
 
     private void DrawPicture(object sender, PaintEventArgs e) {
       // подготовка полотна
-      var g = e.Graphics;
+      Graphics g = e.Graphics;
       g.Clear(Color.White);
 
-      // движение игрока, поиск и обработка пересечений
-      MovePlayer();
-      foreach (var obj in drawingObjects.ToList()) {
+      MovePlayer(); // движение игрока
+
+      foreach (BaseObject obj in drawingObjects.ToList()) {
+        // поиск и обработка пересечений с игроком
         if (!(obj is Player) && player.Overlaps(obj, g)) {
           player.Overlap(obj);
           obj.Overlap(player);
         }
-        if (!(obj is BlackLabel)) {
-          obj.SetReverseColor(blackLabel.Overlaps(obj, g));
-        }
-      }
 
-      // перемещение 
-      foreach (var obj in drawingObjects) {
+        // поиск и обработка пересечений с чёрной областью
+        if (!(obj is BlackLabel)) {
+          if (blackLabel.Overlaps(obj, g))
+            blackLabel.Overlap(obj);
+          else
+            blackLabel.NonOverlap(obj);
+        }
+
+        // перемещение объектов
         g.Transform = obj.GetPosition();
         obj.Draw(g);
       }
+
       lblScore.Text = $"Счёт: {score}";
     }
     private void UpdatePicture(object sender, EventArgs e) { // при тике таймера

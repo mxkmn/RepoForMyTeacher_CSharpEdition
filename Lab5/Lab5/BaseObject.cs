@@ -5,7 +5,9 @@ using System.Drawing.Drawing2D;
 namespace Lab5 {
   class BaseObject {
     public float X, Y, Angle;
-    public bool isColorReversed;
+    public bool IsColorReversed;
+    // делегаты, которые отрабатываются при пересечении и при отсутствии пересечения
+    public Action<BaseObject> OnOverlap, OnNonOverlap;
     public BaseObject(float x, float y, float angle) { // установка стартовых значений
       X = x;
       Y = y;
@@ -18,36 +20,36 @@ namespace Lab5 {
     }
     public virtual void Draw(Graphics g) { } // этой штукой объект рисуется в начале координат
     public void SetReverseColor(bool isReversed) { // этой штукой изменяется цвет
-      isColorReversed = isReversed;
+      IsColorReversed = isReversed;
     }
-    public Matrix GetPosition() {
-      var matrix = new Matrix();
+    public Matrix GetPosition() { // получение матрицы сдвига
+      Matrix matrix = new Matrix();
       matrix.Translate(X, Y);
       matrix.Rotate(Angle);
       return matrix;
     }
-    public virtual GraphicsPath GetGraphicsPath() {
+    public virtual GraphicsPath GetGraphicsPath() { // получение размеров объекта
       return new GraphicsPath();
     }
-    public virtual bool Overlaps(BaseObject obj, Graphics g) {
+    public virtual bool Overlaps(BaseObject obj, Graphics g) { // пересекается ли этот объект с другим объектом
       // берем информацию о собственной (1) и чужой (2) форме
-      var path1 = this.GetGraphicsPath();
-      var path2 = obj.GetGraphicsPath();
+      GraphicsPath path1 = this.GetGraphicsPath();
+      GraphicsPath path2 = obj.GetGraphicsPath();
 
       // применяем к объектам матрицы трансформации
       path1.Transform(this.GetPosition());
       path2.Transform(obj.GetPosition());
 
-      // используем класс Region, который позволяет определить 
-      // пересечение объектов в данном графическом контексте
-      var region = new Region(path1);
+      // используем класс Region, который позволяет определить пересечение объектов в данном графическом контексте
+      Region region = new Region(path1);
       region.Intersect(path2); // пересекаем формы
       return !region.IsEmpty(g); // если полученная форма не пуста то значит было пересечение
     }
-    public Action<BaseObject, BaseObject> OnOverlap; // делегат, который отрабатывается при пересечении 
-    public virtual void Overlap(BaseObject obj) { // при любом пересечении
-      if (!(obj is BlackLabel))
-        OnOverlap?.Invoke(this, obj); // срабатывание делегата, если он не null
+    public virtual void Overlap(BaseObject obj) { // при пересечении
+      OnOverlap?.Invoke(obj); // срабатывание делегата, если он не null
+    }
+    public virtual void NonOverlap(BaseObject obj) { // при непересечении
+      OnNonOverlap?.Invoke(obj);
     }
   }
 }
