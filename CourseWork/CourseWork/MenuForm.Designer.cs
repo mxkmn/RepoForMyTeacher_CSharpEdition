@@ -1,6 +1,6 @@
 ﻿
 namespace CourseWork {
-  partial class MainForm {
+  partial class MenuForm {
     /// <summary>
     /// Обязательная переменная конструктора.
     /// </summary>
@@ -24,48 +24,40 @@ namespace CourseWork {
     /// содержимое этого метода с помощью редактора кода.
     /// </summary>
     private void InitializeComponent() {
-      this.components = new System.ComponentModel.Container();
-      this.picDisplay = new System.Windows.Forms.PictureBox();
-      this.timer1 = new System.Windows.Forms.Timer(this.components);
-      ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
+      this.drawerButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
-      // picDisplay
+      // drawerButton
       // 
-      this.picDisplay.Location = new System.Drawing.Point(0, 0);
-      this.picDisplay.Name = "picDisplay";
-      this.picDisplay.Size = new System.Drawing.Size(750, 750);
-      this.picDisplay.TabIndex = 0;
-      this.picDisplay.TabStop = false;
+      this.drawerButton.Location = new System.Drawing.Point(12, 688);
+      this.drawerButton.Name = "drawerButton";
+      this.drawerButton.Size = new System.Drawing.Size(725, 51);
+      this.drawerButton.TabIndex = 0;
+      this.drawerButton.Text = "Перейти к отрисовщику";
+      this.drawerButton.UseVisualStyleBackColor = true;
+      this.drawerButton.Click += new System.EventHandler(this.drawerButton_Click);
       // 
-      // timer1
-      // 
-      this.timer1.Enabled = true;
-      this.timer1.Interval = 16;
-      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-      // 
-      // MainForm
+      // MenuForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(749, 751);
-      this.Controls.Add(this.picDisplay);
+      this.Controls.Add(this.drawerButton);
       this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
-      this.Name = "MainForm";
+      this.Name = "MenuForm";
       this.ShowIcon = false;
-      this.Text = "Система частиц - задания 8 и 9";
-      ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
+      this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+      this.Text = "Конфигуратор";
       this.ResumeLayout(false);
 
     }
 
     #endregion
 
-    private System.Windows.Forms.PictureBox picDisplay;
-    private System.Windows.Forms.Timer timer1;
+    private System.Windows.Forms.Button drawerButton;
   }
 }
 
