@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlackHole.cs" />
     <Compile Include="DrawerForm.cs">
       <SubType>Form</SubType>
     </Compile>

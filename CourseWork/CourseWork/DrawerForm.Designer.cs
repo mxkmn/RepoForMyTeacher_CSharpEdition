@@ -37,6 +37,7 @@ namespace CourseWork {
       this.drawing.Size = new System.Drawing.Size(750, 750);
       this.drawing.TabIndex = 0;
       this.drawing.TabStop = false;
+      this.drawing.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseInteraction);
       // 
       // ticker
       // 
