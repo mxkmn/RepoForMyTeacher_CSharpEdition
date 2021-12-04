@@ -38,5 +38,10 @@ namespace CourseWork {
       g.FillEllipse(b, X - Radius, Y - Radius, Radius * 2, Radius * 2); // отрисовали
       b.Dispose(); // почистили объект из памяти, чтобы сборщику мусора было попроще
     }
+    public float Feed() {
+      float life = Life;
+      Reset();
+      return life;
+    }
   }
 }

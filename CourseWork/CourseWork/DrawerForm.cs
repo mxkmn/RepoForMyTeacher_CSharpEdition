@@ -17,6 +17,33 @@ namespace CourseWork {
 
       drawing.Image = new Bitmap(drawing.Width, drawing.Height);
     }
+
+
+
+    private void OnTick(object sender = null, EventArgs e = null) { // каждый тик
+      UpdateParticles(); // обновляем частицы
+      UpdateBlackHoles(); // обновляем чёрные дыры
+
+      using (var g = Graphics.FromImage(drawing.Image)) {
+        g.Clear(Color.White);
+
+        foreach (var particle in particles) {
+          particle.Draw(g);
+        }
+        foreach (var blackHole in blackHoles) { // сначала рисуем дыры
+          blackHole.Draw(g);
+        }
+        foreach (var blackHole in blackHoles) { // потом текст, чтоб не было наслоения черноты на информацию
+          StringFormat stringFormat = new StringFormat();
+          stringFormat.Alignment = StringAlignment.Center;
+          stringFormat.LineAlignment = StringAlignment.Center;
+
+          g.DrawString("" + blackHole.Eaten, new Font("Arial", 10), Brushes.White, blackHole.X, blackHole.Y, stringFormat);
+        }
+      }
+
+      drawing.Invalidate(); // отображаем рисунок
+    }
     private void UpdateParticles() {
       if (particles.Count < 500) {
         var particle = new Particle(drawing.Image.Width / 2, drawing.Image.Height / 2);
@@ -34,30 +61,33 @@ namespace CourseWork {
         }
       }
     }
-    private void Render(Graphics g) { // функция рендеринга
-      // утащили сюда отрисовку частиц
-      foreach (var particle in particles) {
-        particle.Draw(g);
-      }
-    }
-    private void OnTick(object sender = null, EventArgs e = null) {
-      UpdateParticles(); // каждый тик обновляем частицы
-
-      using (var g = Graphics.FromImage(drawing.Image)) {
-        g.Clear(Color.White);
-
+    private void UpdateBlackHoles() {
+      foreach (var blackHole in blackHoles) {
         foreach (var particle in particles) {
-          particle.Draw(g);
-        }
-        foreach (var blackHole in blackHoles) {
-          blackHole.Draw(g);
+          if (blackHole.IsTouching(particle))
+            blackHole.Eat(particle);
         }
       }
-
-      //drawing.Invalidate();
     }
+
+
+
     private void MouseInteraction(object sender, MouseEventArgs e) {
-      blackHoles.Add(new BlackHole(e.X, e.Y));
+      if (e.Button == MouseButtons.Left)
+        blackHoles.Add(new BlackHole(e.X, e.Y));
+      if (e.Button == MouseButtons.Right) {
+        for (int i = 0; i < blackHoles.Count; i++) {
+          var blackHole = blackHoles[i];
+
+          var x = Math.Abs(e.X - blackHole.X);
+          var y = Math.Abs(e.Y - blackHole.Y);
+          var lenght = Math.Sqrt(x * x + y * y);
+          if (lenght < blackHole.Radius) {
+            blackHoles.Remove(blackHole);
+            i--;
+          }
+        }
+      }
     }
   }
 }
