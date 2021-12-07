@@ -85,10 +85,8 @@ namespace Lab5 {
 
       foreach (BaseObject obj in drawingObjects.ToList()) {
         // поиск и обработка пересечений с игроком
-        if (!(obj is Player) && player.Overlaps(obj, g)) {
+        if (!(obj is Player) && player.Overlaps(obj, g))
           player.Overlap(obj);
-          obj.Overlap(player);
-        }
 
         // поиск и обработка пересечений с чёрной областью
         if (!(obj is BlackLabel)) {
