@@ -83,7 +83,9 @@ namespace Lab5 {
 
       MovePlayer(); // движение игрока
 
-      foreach (BaseObject obj in drawingObjects.ToList()) {
+      foreach (BaseObject obj in drawingObjects.ToList()) 
+        g.Transform = obj.GetPosition(); // смещение
+
         // поиск и обработка пересечений с игроком
         if (!(obj is Player) && player.Overlaps(obj, g))
           player.Overlap(obj);
@@ -96,9 +98,7 @@ namespace Lab5 {
             blackLabel.NonOverlap(obj);
         }
 
-        // перемещение объектов
-        g.Transform = obj.GetPosition();
-        obj.Draw(g);
+        obj.Draw(g); // отрисовка
       }
 
       lblScore.Text = $"Счёт: {score}";
