@@ -13,10 +13,9 @@ using System.Windows.Forms;
 using Un4seen.Bass;
 using Un4seen.BassWasapi;
 
-namespace AudioSpectrumAdvance {
+namespace CourseWork {
   internal class Analyzer {
     private WASAPIPROC _process;                          //callback function to obtain data
-
     public Analyzer() {
       _process = new WASAPIPROC(Process);
 
@@ -32,7 +31,7 @@ namespace AudioSpectrumAdvance {
         throw new Exception("Аудиопоток недоступен");
 
       Bass.BASS_SetConfig(BASSConfig.BASS_CONFIG_UPDATETHREADS, false);
-      if (!Bass.BASS_Init(availableDevice, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+      if (!Bass.BASS_Init(0, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
         throw new Exception(Bass.BASS_ErrorGetCode().ToString());
 
       if (!BassWasapi.BASS_WASAPI_Init(availableDevice, 0, 0, BASSWASAPIInit.BASS_WASAPI_BUFFER, 1f, 0.05f, _process, IntPtr.Zero))
@@ -41,10 +40,13 @@ namespace AudioSpectrumAdvance {
       BassWasapi.BASS_WASAPI_Start();
     }
 
-    private byte[] getInfo() {
+    public byte[] getRawData() {
       int b0 = 0;
       float[] fftBufferData = new float[8192];
       List<byte> _spectrumdata = new List<byte>();
+
+      if (BassWasapi.BASS_WASAPI_GetData(fftBufferData, (int)BASSData.BASS_DATA_FFT8192) < -1)
+        return _spectrumdata.ToArray();
 
       for (int x = 0; x < 64; x++) {
         float peak = 0;

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 
 namespace CourseWork {
   public partial class DrawerForm : Form {
     List<Particle> particles = new List<Particle>(); // список частиц
     List<BlackHole> blackHoles = new List<BlackHole>(); // список частиц
+    Analyzer analyzer = new Analyzer();
+
     bool _debug = false;
     int _ticks = 0, _updateSpeed, _generationType;
     public DrawerForm() {
@@ -38,35 +41,41 @@ namespace CourseWork {
             blackHole.Draw(g);
           }
           foreach (var blackHole in blackHoles) { // потом текст, чтоб не было наслоения черноты на информацию
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Center;
-
-            g.DrawString("" + blackHole.Eaten, new Font("Arial", 10), Brushes.White, blackHole.X, blackHole.Y, stringFormat);
+            blackHole.DrawInfo(g);
           }
         }
       }
       drawing.Invalidate(); // отображаем рисунок
     }
-    private void MouseDebug(object sender, MouseEventArgs e) {
-      if (_debug) {
-        int x = e.X, y = e.Y;
-        using (var g = Graphics.FromImage(drawing.Image)) {
-          foreach (var particle in particles)
-            particle.DrawInfo(g, x, y);
-        }
-        drawing.Invalidate(); // отображаем рисунок
+    public void PrintByteArray(byte[] bytes) {
+      var sb = new StringBuilder("new byte[] { ");
+      foreach (var b in bytes) {
+        sb.Append(b + ", ");
       }
+      sb.Append("}");
+      Console.WriteLine(sb.ToString());
+      Console.WriteLine("\n\n\n");
     }
     private void UpdateParticles() {
-      if (particles.Count < 500) {
-        var particle = new Particle(drawing.Image.Width / 2, drawing.Image.Height / 2);
-        particles.Add(particle); // добавляю в список
+      if (_generationType != 2) {
+        if (particles.Count < 500) {
+          Particle particle = new Particle(drawing.Image.Width, drawing.Image.Height, _generationType);
+          particles.Add(particle); // добавляю в список
+        }
       }
-      foreach (var particle in particles) {
-        particle.Life--; // уменьшаю здоровье
+      else {
+        byte[] rawData = analyzer.getRawData();
+        for (int i = 0; i < rawData.Length; i++) {
+          Particle particle = new Particle(5+i*10, 260-rawData[i], _generationType);
+          particles.Add(particle); // добавляю в список
+        }
+      }
+      for (int i = particles.Count-1; i > -1; i--) {
+        var particle = particles[i];
+
+        particle.Life -= _generationType == 2 ? 4 : 1; // уменьшаю здоровье
         if (particle.Life < 0) // если здоровье кончилось
-          particle.Reset();
+          particles.Remove(particle);
         else
           particle.Move();
       }
@@ -77,6 +86,16 @@ namespace CourseWork {
           if (blackHole.IsTouching(particle))
             blackHole.Eat(particle);
         }
+      }
+    }
+    private void MouseDebug(object sender, MouseEventArgs e) {
+      if (_debug) {
+        int x = e.X, y = e.Y;
+        using (var g = Graphics.FromImage(drawing.Image)) {
+          foreach (var particle in particles)
+            particle.DrawInfo(g, x, y);
+        }
+        drawing.Invalidate(); // отображаем рисунок
       }
     }
     private void MouseInteraction(object sender, MouseEventArgs e) {

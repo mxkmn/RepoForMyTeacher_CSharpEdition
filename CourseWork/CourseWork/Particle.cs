@@ -3,25 +3,36 @@ using System.Drawing;
 
 namespace CourseWork {
   class Particle {
-    public int Radius, CenterX, CenterY;
+    public int Radius;
     public float X, Y, Direction, Speed, Life;
     private static readonly Random rand = new Random();
 
-    public Particle(int centerX, int centerY) {
-      CenterX = centerX;
-      CenterY = centerY;
-      Reset();
-    }
-    public void Reset(float? x = null, float? y = null) {
-      // перенос частицы в центр изображения или куда-то ещё
-      X = x == null ? CenterX : (float)x;
-      Y = y == null ? CenterY : (float)y;
+    public Particle(int x, int y, int generationType) {
+      if (generationType == 0) {
+        X = x/2;
+        Y = y/2;
+      }
+      else if (generationType == 1) {
+        X = rand.Next(x);
+        Y = rand.Next(y);
+      }
+      else { // (generationType == 2)
+        X = x;
+        Y = y;
+      }
 
-      // создание рандомных параметров
-      Direction = rand.Next(360);
-      Speed = rand.Next(1, 10);
-      Radius = rand.Next(2, 10);
-      Life = rand.Next(20, 100);
+      if (generationType == 2) {
+        Direction = 270;
+        Speed = 2;
+        Radius = 4;
+        Life = 100;
+      }
+      else { // создание рандомных параметров
+        Direction = rand.Next(360);
+        Speed = rand.Next(1, 10);
+        Radius = rand.Next(2, 10);
+        Life = rand.Next(20, 100);
+      }
     }
     public void Move() {
       var directionInRadians = Direction / 180 * Math.PI;
@@ -59,7 +70,7 @@ namespace CourseWork {
     }
     public float Feed() {
       float life = Life;
-      Reset();
+      Life = 0;
       return life;
     }
   }
