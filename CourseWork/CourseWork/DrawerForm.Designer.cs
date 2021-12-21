@@ -28,14 +28,14 @@ namespace CourseWork {
       this.drawing = new System.Windows.Forms.PictureBox();
       this.ticker = new System.Windows.Forms.Timer(this.components);
       this.label1 = new System.Windows.Forms.Label();
-      this.checkBox1 = new System.Windows.Forms.CheckBox();
+      this.debugCheckBox = new System.Windows.Forms.CheckBox();
       this.speedBar = new System.Windows.Forms.TrackBar();
       this.label2 = new System.Windows.Forms.Label();
       this.radioButton1 = new System.Windows.Forms.RadioButton();
       this.radioButton2 = new System.Windows.Forms.RadioButton();
       this.radioButton3 = new System.Windows.Forms.RadioButton();
       this.label3 = new System.Windows.Forms.Label();
-      this.button1 = new System.Windows.Forms.Button();
+      this.tickButton = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.drawing)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
       this.SuspendLayout();
@@ -48,6 +48,7 @@ namespace CourseWork {
       this.drawing.TabIndex = 0;
       this.drawing.TabStop = false;
       this.drawing.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseInteraction);
+      this.drawing.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseDebug);
       // 
       // ticker
       // 
@@ -65,24 +66,26 @@ namespace CourseWork {
       this.label1.Text = "Настройки";
       this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
       // 
-      // checkBox1
+      // debugCheckBox
       // 
-      this.checkBox1.Location = new System.Drawing.Point(261, 322);
-      this.checkBox1.Name = "checkBox1";
-      this.checkBox1.Size = new System.Drawing.Size(125, 69);
-      this.checkBox1.TabIndex = 4;
-      this.checkBox1.Text = "Включить дебаг-режим";
-      this.checkBox1.UseVisualStyleBackColor = true;
-      this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+      this.debugCheckBox.Location = new System.Drawing.Point(260, 315);
+      this.debugCheckBox.Name = "debugCheckBox";
+      this.debugCheckBox.Size = new System.Drawing.Size(125, 69);
+      this.debugCheckBox.TabIndex = 4;
+      this.debugCheckBox.Text = "Включить дебаг-режим";
+      this.debugCheckBox.UseVisualStyleBackColor = true;
+      this.debugCheckBox.CheckedChanged += new System.EventHandler(this.OnDebugChange);
       // 
       // speedBar
       // 
       this.speedBar.LargeChange = 1;
       this.speedBar.Location = new System.Drawing.Point(438, 328);
+      this.speedBar.Maximum = 5;
       this.speedBar.Name = "speedBar";
       this.speedBar.Size = new System.Drawing.Size(199, 45);
       this.speedBar.TabIndex = 3;
-      this.speedBar.Value = 10;
+      this.speedBar.Value = 5;
+      this.speedBar.Scroll += new System.EventHandler(this.OnSpeedChange);
       // 
       // label2
       // 
@@ -103,6 +106,7 @@ namespace CourseWork {
       this.radioButton1.TabStop = true;
       this.radioButton1.Text = "В центре";
       this.radioButton1.UseVisualStyleBackColor = true;
+      this.radioButton1.CheckedChanged += new System.EventHandler(this.GenerateInCenter);
       // 
       // radioButton2
       // 
@@ -114,6 +118,7 @@ namespace CourseWork {
       this.radioButton2.TabStop = true;
       this.radioButton2.Text = "Везде";
       this.radioButton2.UseVisualStyleBackColor = true;
+      this.radioButton2.CheckedChanged += new System.EventHandler(this.GenerateEverywhere);
       // 
       // radioButton3
       // 
@@ -125,6 +130,7 @@ namespace CourseWork {
       this.radioButton3.TabStop = true;
       this.radioButton3.Text = "Спектр звуковых частот";
       this.radioButton3.UseVisualStyleBackColor = true;
+      this.radioButton3.CheckedChanged += new System.EventHandler(this.GenerateBySound);
       // 
       // label3
       // 
@@ -135,28 +141,29 @@ namespace CourseWork {
       this.label3.Text = "Генерация частиц";
       this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
-      // button1
+      // tickButton
       // 
-      this.button1.Location = new System.Drawing.Point(438, 379);
-      this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(199, 30);
-      this.button1.TabIndex = 9;
-      this.button1.Text = "+ шаг";
-      this.button1.UseVisualStyleBackColor = true;
+      this.tickButton.Location = new System.Drawing.Point(438, 379);
+      this.tickButton.Name = "tickButton";
+      this.tickButton.Size = new System.Drawing.Size(199, 30);
+      this.tickButton.TabIndex = 9;
+      this.tickButton.Text = "+ шаг";
+      this.tickButton.UseVisualStyleBackColor = true;
+      this.tickButton.Click += new System.EventHandler(this.OnTick);
       // 
       // DrawerForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(649, 423);
-      this.Controls.Add(this.button1);
+      this.Controls.Add(this.tickButton);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.radioButton3);
       this.Controls.Add(this.radioButton2);
       this.Controls.Add(this.radioButton1);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.speedBar);
-      this.Controls.Add(this.checkBox1);
+      this.Controls.Add(this.debugCheckBox);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.drawing);
       this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -179,13 +186,13 @@ namespace CourseWork {
     private System.Windows.Forms.PictureBox drawing;
     private System.Windows.Forms.Timer ticker;
     private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.CheckBox checkBox1;
+    private System.Windows.Forms.CheckBox debugCheckBox;
     private System.Windows.Forms.TrackBar speedBar;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.RadioButton radioButton1;
     private System.Windows.Forms.RadioButton radioButton2;
     private System.Windows.Forms.RadioButton radioButton3;
     private System.Windows.Forms.Label label3;
-    private System.Windows.Forms.Button button1;
+    private System.Windows.Forms.Button tickButton;
   }
 }
