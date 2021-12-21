@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CourseWork {
@@ -17,8 +12,6 @@ namespace CourseWork {
 
       drawing.Image = new Bitmap(drawing.Width, drawing.Height);
     }
-
-
 
     private void OnTick(object sender = null, EventArgs e = null) { // каждый тик
       UpdateParticles(); // обновляем частицы
@@ -88,6 +81,10 @@ namespace CourseWork {
           }
         }
       }
+    }
+
+    private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+
     }
   }
 }
