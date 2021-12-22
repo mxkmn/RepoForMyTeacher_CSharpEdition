@@ -47,15 +47,6 @@ namespace CourseWork {
       }
       drawing.Invalidate(); // отображаем рисунок
     }
-    public void PrintByteArray(byte[] bytes) {
-      var sb = new StringBuilder("new byte[] { ");
-      foreach (var b in bytes) {
-        sb.Append(b + ", ");
-      }
-      sb.Append("}");
-      Console.WriteLine(sb.ToString());
-      Console.WriteLine("\n\n\n");
-    }
     private void UpdateParticles() {
       if (_generationType != 2) {
         if (particles.Count < 500) {

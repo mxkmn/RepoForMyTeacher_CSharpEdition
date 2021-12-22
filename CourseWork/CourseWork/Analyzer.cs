@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 /*
- * Для подключения библиотеки добавьте в ссылки проекта Bass.Net.dll,
+ * Для подключения библиотек добавьте в ссылки проекта Bass.Net.dll,
  * а в /bin/debug/ basswasapi.dll и bass.dll
  */
 using Un4seen.Bass;
@@ -20,7 +20,7 @@ using Un4seen.BassWasapi;
 
 namespace CourseWork {
   internal class Analyzer {
-    private WASAPIPROC _process;                          //callback function to obtain data
+    private WASAPIPROC _process;
     public Analyzer() {
       _process = new WASAPIPROC(Process);
 
@@ -53,7 +53,7 @@ namespace CourseWork {
       if (BassWasapi.BASS_WASAPI_GetData(fftBufferData, (int)BASSData.BASS_DATA_FFT8192) < -1)
         return _spectrumdata.ToArray();
 
-      for (int x = 0; x < 64; x++) {
+      for (int x = 0; x < 32; x++) {
         float peak = 0;
         int b1 = (int)Math.Pow(2, x * 10.0 / 63);
         if (b1 > 1023)

@@ -83,7 +83,7 @@ namespace Lab5 {
 
       MovePlayer(); // движение игрока
 
-      foreach (BaseObject obj in drawingObjects.ToList()) 
+      foreach (BaseObject obj in drawingObjects.ToList()) {  
         g.Transform = obj.GetPosition(); // смещение
 
         // поиск и обработка пересечений с игроком

@@ -29,9 +29,9 @@ namespace Lab5 {
       base.Overlap(obj); // пишем с чем пересёкся
 
       if (obj is Marker) // если пересёкся с указателем
-        OnMarkerOverlap(obj as Marker);
+        OnMarkerOverlap?.Invoke(obj as Marker);
       if (obj is Target) // если пересёкся с едой
-        OnTargetOverlap(obj as Target);
+        OnTargetOverlap?.Invoke(obj as Target);
     }
   }
 }
