@@ -53,7 +53,7 @@ namespace CourseWork {
       if (BassWasapi.BASS_WASAPI_GetData(fftBufferData, (int)BASSData.BASS_DATA_FFT8192) < -1)
         return _spectrumdata.ToArray();
 
-      for (int x = 0; x < 32; x++) {
+      for (int x = 0; x < 64; x++) {
         float peak = 0;
         int b1 = (int)Math.Pow(2, x * 10.0 / 63);
         if (b1 > 1023)
